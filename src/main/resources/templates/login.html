@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <template th:replace="~{commons/common :: head}"></template>
+    <title>登录</title>
+</head>
+<body>
+<div class="bg"></div>/
+<div class="container">
+    <div class="line bouncein">
+        <div class="xs6 xm4 xs3-move xm4-move">
+            <div style="height:150px;"></div>
+            <div class="media media-y margin-big-bottom">
+            </div>
+            <form th:action="@{/login}" method="post">
+                <div class="panel loginbox">
+                    <div class="text-center margin-big padding-big-top"><h1>后台管理中心</h1></div>
+                    <div class="panel-body" style="padding:30px; padding-bottom:10px; padding-top:10px;">
+                        <div class="form-group">
+                            <div class="field field-icon-right">
+                                <input class="input input-big" data-validate="required:请填写账号"
+                                       th:value="${account == null ? '' : account}"
+                                       name="account" placeholder="登录账号"
+                                       type="text"/>
+                                <span class="icon icon-user margin-small"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="field field-icon-right">
+                                <input class="input input-big" data-validate="required:请填写密码"
+                                       th:value="${password == null ? '' : password}"
+                                       name="password" placeholder="登录密码"
+                                       type="password"/>
+                                <span class="icon icon-key margin-small"></span>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div style="padding:30px;"><input class="button button-block bg-main text-big input-big"
+                                                      type="submit" value="登录">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

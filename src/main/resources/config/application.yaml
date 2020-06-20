@@ -1,0 +1,39 @@
+
+spring:
+  #数据源
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/library?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=GMT%2B8
+    username: root
+    password: 123456
+    type: com.alibaba.druid.pool.DruidDataSource
+  thymeleaf:
+    cache: false
+
+  #RedisProperties
+  redis:
+    database: 1
+    port: 6379
+    host: localhost
+
+
+#
+mybatis-plus:
+  mapper-locations: classpath:/mapper/*.xml
+  global-config:
+    db-config:
+      #逻辑删除配置
+      logic-not-delete-value: 0
+      logic-delete-value: 2
+
+
+#server
+server:
+  port: 8080
+  servlet:
+    context-path: /library
+
+
+
+
+

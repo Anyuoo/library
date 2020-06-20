@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <template th:replace="~{commons/common :: head}"></template>
+    <title>增加图书</title>
+</head>
+<body>
+
+
+<div class="panel admin-panel">
+    <div class="panel-head" id="add"><strong><span class="icon-pencil-square-o"></span>增加图书</strong></div>
+    <div class="body-content">
+        <form th:action="@{/book/add}" class="form-x" method="post">
+            <div class="form-group">
+                <div class="label">
+                    <label> 图书名称</label>
+                </div>
+                <div class="field">
+                    <input class="input w50" data-validate="required:名称" name="name" type="text"
+                           th:value="${msg == 1 ? '' : book.name}"/>
+                    <div class="tips"></div>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <div class="label">
+                    <label>图书类型：</label>
+                </div>
+                <div class="field">
+                    <select class="input w50" name="type" >
+                        <option disabled selected value="">请选择分类</option>
+                        <option value="1">科技类</option>
+                        <option value="2">小说类</option>
+                        <option value="3">教学类</option>
+                        <option value="4">社会类</option>
+                    </select>
+                    <div class="tips"></div>
+                </div>
+            </div>
+
+            <div class="clear"></div>
+            <div class="form-group">
+                <div class="label">
+                    <label>是否可借数量：</label>
+                </div>
+                <div class="field">
+                    <input class="input" name="borrowNum" type="text" th:value="${msg == 1 ? '' : book.borrowNum}"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="label">
+                    <label>出版社：</label>
+                </div>
+                <div class="field">
+                    <input class="input" name="press" type="text" th:value="${msg == 1 ? '' : book.press}"/>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="label">
+                    <label>价格</label>
+                </div>
+                <div class="field">
+                    <input class="input" name="price" type="text" th:value="${msg == 1 ? '' :book.price}"/>
+                    <div class="tips"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="label">
+                    <label>出版时间：</label>
+                </div>
+                <div class="field">
+
+                    <input class="laydate-icon input w50" data-validate="required:日期不能为空" name="publishDate"
+                           type="date"
+                           th:value="${msg == 1 ? '' : book.publishDate}"/>
+                    <div class="tips"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="label">
+                    <label>作者：</label>
+                </div>
+                <div class="field">
+                    <input class="input w50" name="author" type="text" th:value="${msg == 1 ? '' : book.author}" />
+                    <div class="tips"></div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="label">
+                    <label></label>
+                </div>
+                <div class="field">
+                    <button class="button bg-main icon-check-square-o" type="submit"> 提交</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+</body>
+</html>

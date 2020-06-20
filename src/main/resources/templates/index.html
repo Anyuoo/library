@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+    <head>
+       <template th:replace="~{commons/common :: head}"></template>
+        <title>Library</title>
+    </head>
+
+    <body style="background-color:#f2f9fd;">
+
+        <div th:replace="~{commons/common :: nav}"></div>
+
+        <div class="admin">
+            <iframe height="100%" name="right" rameborder="0"
+                    scrolling="auto" th:src="@{/book/list}" width="100%"></iframe>
+        </div>
+
+    </body>
+</html>

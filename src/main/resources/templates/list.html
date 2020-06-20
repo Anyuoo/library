@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+   <template th:replace="~{commons/common :: head}"></template>
+    <title>Library</title>
+    <!-- <h3 style="color: cornflowerblue; text-align: center;"> 欢迎登录图书管理系统</h3> -->
+</head>
+<body>
+<br>
+<!--  显示列表 -->
+<form action="" id="listform" method="post">
+    <div class="panel admin-panel">
+        <div class="panel-head">
+            <strong class="icon-reorder"> 内容列表</strong>
+            <a href="" style="float:right; display:none;">添加字段</a>
+        </div>
+        <div class="padding border-bottom">
+            <ul class="search" style="padding-left:10px;">
+
+                <li><a class="button border-main icon-plus-square-o" th:href="@{/book/add}"> 增加</a></li>
+                <li>搜索：</li>
+                <if condition="$iscid eq 1">
+                    <li>
+                        <select class="input" name="cid" onchange="changesearch()"
+                                style="width:100px; line-height:17px;">
+                            <option selected disabled value="">图书类型</option>
+                            <option value="">文学类</option>
+                            <option value="">历史类</option>
+                            <option value="">悬疑类</option>
+                            <option value="">心理健康类</option>
+                        </select>
+                    </li>
+                </if>
+                <li>
+                    <input class="input" name="keywords" placeholder="请输入搜索关键字" style="width:250px; line-height:17px;display:inline-block"
+                           type="text"/>
+                    <a class="button border-main icon-search" href="javascript:void(0)" onclick="changesearch()"> 搜索</a>
+                </li>
+                <li>
+                    推荐
+                    <select class="input" name="s_isvouch" onchange="changesearch()"
+                            style="width:60px; line-height:17px;display:inline-block">
+                        <option selected disabled  value="">选择</option>
+                        <option value="1">是</option>
+                        <option value="0">否</option>
+                    </select>
+                    &nbsp;&nbsp;
+                    置顶
+                    <select class="input" name="s_istop" onchange="changesearch()"
+                            style="width:60px; line-height:17px;display:inline-block">
+                        <option selected disabled value="">选择</option>
+                        <option value="1">是</option>
+                        <option value="0">否</option>
+                    </select>
+                </li>
+            </ul>
+        </div>
+    </div>
+</form>
+
+<!--  表格显示类容 -->
+<table class="table table-hover text-center">
+    <tr>
+        <th style="text-align:left; padding-left:20px;" width="100">ID</th>
+        <th width="10%">是否出借</th>
+        <th>图书名称</th>
+        <th>图书类型</th>
+        <th>作者</th>
+        <th>价格</th>
+        <th width="10%">发行时间</th>
+        <th>出版社</th>
+        <th width="310">操作</th>
+    </tr>
+    <tr th:each="book : ${page.records}">
+        <td style="text-align:left; padding-left:10px;">
+<!--            <input name="id[]" type="checkbox" value=""/>-->
+            <i th:text="${book.id}"></i>
+        </td>
+        <!--  是否可以出借 使用 if 判断 -->         
+        <td th:text="${book.borrowNum > 0 ? '是' : '否'}">true</td>
+
+        <td width="10%" th:utext="${book.name}">name</td>
+        <!--图书类型-->
+        <!--        类别（1->全部、2->文学类、3->历史类、4->悬疑类、5->心理健康类）-->
+        <td th:switch="${book.type}">
+            <i th:case="2">文学类</i>
+            <i th:case="3">历史类</i>
+            <i th:case="4">悬疑类</i>
+            <i th:case="5">心理健康类</i>
+            <i th:case="*">文学类</i>
+        </td>
+        <!--作者-->
+        <td><font color="#00CC99" th:utext="${book.author}">author</font></td>
+        <!--价格-->
+        <td th:text="${book.price}"> 10</td>
+        <!--发行时间-->
+        <td th:text="${book.publishDate}">20</td>
+        <!--出版社-->
+        <td th:utext="${book.press}"> 30</td>
+        <td>
+            <div class="button-group">
+
+                <!--  修改  -->
+                <a class="button border-main"
+                   th:href="@{|/book/edit/${book.id}|}">
+                    <span class="icon-edit"></span>修改</a>
+                <a class="button border-red" href="javascript:void(0)" th:id="${book.id}" th:name="${book.name}"
+                   th:onclick="deleteBook(this.getAttribute('id'),this.getAttribute('name'))">
+                    <span class="icon-trash-o"></span> 删除</a>
+            </div>
+        </td>
+    </tr>
+</table>
+
+<nav aria-label="Page navigation" th:if="${page.pages > 1}">
+    <ul class="pagination">
+        <li th:class="|${page.hasPrevious()  ? '' : 'disabled'}|">
+            <a th:href="@{/book/list(current= ${page.current} - 1)}" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+<!--            ${page.current > 1 ? page.current - 2 : 0},${page.current <= page.pages - 2  ? page.current + 2 : page.pages - 1}-->
+        <li th:class="|${page.current == cur ? 'active' : ''}|"
+            th:each="cur : ${#numbers.sequence((page.current > 2 ? page.current - 2 : 1) ,
+            (page.current < page.pages - 2  ? page.current + 2 : page.pages ))}">
+            <a th:href="@{/book/list(current = ${cur})}" th:text="${cur}">2</a>
+        </li>
+
+        <li th:class="|${page.hasNext() ? '' : 'disabled'}|">
+            <a th:href="@{/book/list(current= ${page.current} + 1)}"  aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+    </ul>
+</nav>
+
+<script th:src="@{/js/list.js}"></script>
+</body>
+</html>
+<h3 style="color: cornflowerblue; text-align: center;"> 欢迎登录图书管理系统</h3>

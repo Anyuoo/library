@@ -26,9 +26,11 @@ public class Borrow {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private LocalDateTime shouldRTime;
 
-    private int status;
-
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private LocalDateTime returnTime;
+
+    private int returnStatus;
+
+    private int status;
 }

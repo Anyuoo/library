@@ -28,37 +28,34 @@
 <!--  表格显示类容 -->
 <table class="table table-hover text-center">
     <tr>
-        <th style="text-align:left; padding-left:20px;" width="100">ID</th>
-        <th width="10%">账户</th>
-        <th width="10%">名字</th>
-        <th>昵称</th>
-        <th width="10%">性别</th>
-        <th>学号</th>
-        <th >借阅次数</th>
-        <th width="310">操作</th>
+        <th>ID</th>
+        <th >图书ID</th>
+        <th width="15%">读者ID</th>
+        <th width="15%">借阅时间</th>
+        <th width="15%">到期时间</th>
+        <th >是否归还</th>
+        <th width="15%">归还时间</th>
+        <th>状态</th>
+        <th>操作</th>
     </tr>
-    <tr th:if="${page.records != null}" th:each="reader : ${page.records}">
-        <td th:text="${reader.id}"></td>
+    <tr th:if="${page.records != null}" th:each="borrow : ${page.records}">
+        <td th:text="${borrow.id}"></td>
 
-        <td th:utext="${reader.account}"></td>
-        <td th:utext="${reader.name}">name</td>
+        <td th:text="${borrow.bookId}"></td>
+        <td th:text="${borrow.readerId}"></td>
+        <td th:text="${borrow.borrowTime}"></td>
 
-        <td><font color="#00CC99" th:utext="${reader.nickname}">author</font></td>
+        <td th:text="${borrow.shouldRTime}"></td>
 
-        <td th:text="${reader.sex == 1 ? '男' : '女'}"> 10</td>
+        <td th:text="${borrow.returnStatus == 1 ? '已还' : '未还'}"> </td>
 
-        <td  th:text="${reader.studentId}"> 10</td>
+        <td  th:text="${#strings.isEmpty(borrow.returnTime) ? '' : borrow.returnTime}"></td>
 
-        <td th:text="${reader.borrowNumber}"> 30</td>
+        <td th:text="${borrow.status == 0 ? '正常' : '失效'}"></td>
         <td>
-            <div class="button-group">
-                <!--  修改  -->
-                <a class="button border-main">
-                    <span class="icon-edit"></span>修改</a>
-                <a class="button border-red" href="javascript:void(0)" th:id="${reader.id}" th:name="${reader.name}"
-                   th:onclick="deleteBook(this.getAttribute('id'),this.getAttribute('name'))">
-                    <span class="icon-trash-o"></span> 删除</a>
-            </div>
+            <a class="button border-red" href="javascript:void(0)"
+               th:onclick="deleteB(this.getAttribute('id'))">
+                <span class="icon-trash-o"></span> 删除</a>
         </td>
     </tr>
 </table>
@@ -66,7 +63,7 @@
 <nav aria-label="Page navigation" th:if="${page.pages > 1}">
     <ul class="pagination">
         <li th:class="|${page.hasPrevious()  ? '' : 'disabled'}|">
-            <a th:href="@{/reader/list(current= ${page.current} - 1)}" aria-label="Previous">
+            <a th:href="@{/borrow/list(current= ${page.current} - 1)}" aria-label="Previous">
                 <span aria-hidden="true">&laquo;</span>
             </a>
         </li>
@@ -74,11 +71,11 @@
         <li th:class="|${page.current == cur ? 'active' : ''}|"
             th:each="cur : ${#numbers.sequence((page.current > 2 ? page.current - 2 : 1) ,
             (page.current < page.pages - 2  ? page.current + 2 : page.pages ))}">
-            <a th:href="@{/reader/list(current = ${cur})}" th:text="${cur}">2</a>
+            <a th:href="@{/borrow/list(current = ${cur})}" th:text="${cur}">2</a>
         </li>
 
         <li th:class="|${page.hasNext() ? '' : 'disabled'}|">
-            <a th:href="@{/reader/list(current= ${page.current} + 1)}"  aria-label="Next">
+            <a th:href="@{/borrow/list(current= ${page.current} + 1)}"  aria-label="Next">
                 <span aria-hidden="true">&raquo;</span>
             </a>
         </li>

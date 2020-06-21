@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -21,6 +22,7 @@ public class BookServiceImpl extends ServiceImpl<BooksMapper, Book> implements B
     }
 
     @Override
+    @Transactional
     public Boolean saveBook(Book book) {
         //书籍存在,添加失败
         if(this.getBook(null,book.getName(),book.getAuthor()) != null){
@@ -35,11 +37,13 @@ public class BookServiceImpl extends ServiceImpl<BooksMapper, Book> implements B
     }
 
     @Override
+    @Transactional
     public Boolean removeBook(String id) {
         return this.removeById(id);
     }
 
     @Override
+    @Transactional
     public Boolean updateBook(Book book) {
         List<Book> books = this.listBooks(book.getName(), book.getAuthor());
         if (books.size() > 1) {
@@ -73,10 +77,10 @@ public class BookServiceImpl extends ServiceImpl<BooksMapper, Book> implements B
      * @return wrapper
      */
     private QueryWrapper<Book> oneWrapper(String id, String name, String author){
-        return wrapper(id, name, author, BookType.ALL.Index(), ORDER_NONE,null,STATUS_NORMAL);
+        return wrapper(id, name, author, BookType.ALL.Index(), null,null,STATUS_NORMAL);
     }
 
-    private QueryWrapper<Book> wrapper(String id, String name, String author, int type, int order, String orderCol,int status) {
+    private QueryWrapper<Book> wrapper(String id, String name, String author, int type, Integer order, String orderCol,Integer status) {
         QueryWrapper<Book> wrapper = new QueryWrapper<>();
         if (id != null) {
             wrapper.eq("id", id);
@@ -94,7 +98,7 @@ public class BookServiceImpl extends ServiceImpl<BooksMapper, Book> implements B
             wrapper.eq("type", type);
         }
 
-        if (order != ORDER_NONE || orderCol == null) {
+        if (order != null) {
             if (order == ORDER_DESC) {
                 wrapper.orderByDesc(orderCol);
             }else if (order == ORDER_ASC) {
@@ -104,7 +108,9 @@ public class BookServiceImpl extends ServiceImpl<BooksMapper, Book> implements B
             }
         }
 
-        wrapper.eq("status", status);
+        if (status != null) {
+            wrapper.eq("status", status);
+        }
 
         return wrapper;
     }

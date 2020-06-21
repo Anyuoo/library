@@ -44,7 +44,7 @@ public class BookController implements LibraryConstant {
         }else {
             model.addAttribute("msg", 1);
         }
-        return "redirect:/index";
+        return "redirect:/book/list";
     }
 
     @GetMapping("/edit/{id}")

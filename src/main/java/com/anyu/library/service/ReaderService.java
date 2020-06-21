@@ -10,4 +10,6 @@ public interface ReaderService extends IService<Reader> {
     Reader getReader(String id, String account, String name);
 
     Boolean saveReader(Reader reader);
+
+    Boolean updateReader(Reader reader);
 }

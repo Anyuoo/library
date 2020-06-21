@@ -38,12 +38,12 @@ public class BorrowController {
         page.setSize(20);
 
         Page<Borrow> borrowPage = new Page<>();
-        borrowPage.setSize(20);
+        borrowPage.setSize(page.getSize());
         borrowService.listOverdue(borrowPage);
 
-        List<OrderItem> orders = borrowPage.getOrders();
-        if (!orders.isEmpty()){
-            List<OverdoVO> list = new ArrayList<>(orders.size());
+        List<Borrow> records = borrowPage.getRecords();
+        if (!records.isEmpty()){
+            List<OverdoVO> list = new ArrayList<>(records.size());
             borrowPage.getRecords().forEach(
                     borrow ->{
                         OverdoVO overdoVO = new OverdoVO();

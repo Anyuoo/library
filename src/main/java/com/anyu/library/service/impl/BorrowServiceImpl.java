@@ -12,9 +12,12 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Service
 public class BorrowServiceImpl extends ServiceImpl<BorrowMapper, Borrow> implements BorrowService {
@@ -35,14 +38,17 @@ public class BorrowServiceImpl extends ServiceImpl<BorrowMapper, Borrow> impleme
     }
 
     @Override
-    @Transactional
+    @Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
     public Boolean saveBorrow(Borrow borrow) {
         int num;
         Reader reader = readerService.getReader(borrow.getReaderId(), null, null);
         reader.setBorrowNumber(reader.getBorrowNumber()+1);
+        readerService.updateReader(reader);
+
         Book book = bookService.getBook(borrow.getBookId(), null, null);
         if ((num = book.getBorrowNum()) > 0) {
             book.setBorrowNum(num-1);
+            bookService.updateBook(book);
             return this.saveOrUpdate(borrow);
         }
         return false;
@@ -64,7 +70,7 @@ public class BorrowServiceImpl extends ServiceImpl<BorrowMapper, Borrow> impleme
             wrapper.eq("return_status", returnStatus);
         }
         if (SRTime) {
-            wrapper.ge("should_r_time", LocalDateTime.now());
+            wrapper.lt("should_r_time", LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
         }
         return wrapper;
     }

@@ -7,13 +7,15 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ReaderServiceImpl extends ServiceImpl<ReaderMapper,Reader> implements ReaderService  {
 
     @Override
-    @Transactional
+    @Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
     public Boolean saveReader(Reader reader) {
         if (reader == null) {
             return false;
@@ -22,6 +24,11 @@ public class ReaderServiceImpl extends ServiceImpl<ReaderMapper,Reader> implemen
             return false;
         }
         return this.save(reader);
+    }
+
+    @Override
+    public Boolean updateReader(Reader reader) {
+        return this.updateById(reader);
     }
 
     @Override

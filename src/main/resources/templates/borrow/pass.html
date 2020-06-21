@@ -31,7 +31,8 @@
         <th>图书ID</th>
         <th>图书名</th>
         <th width="15%">读者ID</th>
-        <th width="15%">读者名</th>
+        <th>读者名</th>
+        <th width="15%">借阅时间</th>
         <th width="15%">到期时间</th>
         <th >是否归还</th>
         <th width="15%">归还时间</th>
@@ -45,7 +46,7 @@
         <td th:text="${overdoVO.book.name}"></td>
         <td th:text="${overdoVO.reader.id}"></td>
         <td th:text="${overdoVO.reader.name}"></td>
-
+        <td th:text="${overdoVO.borrow.borrowTime}"></td>
         <td th:text="${overdoVO.borrow.shouldRTime}"></td>
 
         <td th:text="${overdoVO.borrow.returnStatus == 1 ? '已还' : '未还'}"> </td>

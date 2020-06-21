@@ -1,20 +1,16 @@
 package com.anyu.library.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.JSONPObject;
 import com.anyu.library.annotation.RequiredLogin;
 import com.anyu.library.entity.Book;
 import com.anyu.library.service.BookService;
 import com.anyu.library.utils.LibraryConstant;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @Controller
 @RequestMapping("/book")
@@ -25,10 +21,9 @@ public class BookController implements LibraryConstant {
     private BookService bookService;
 
     @GetMapping("/list")
-    public String listBooks(Model model, Page<Book> page) {
+    public String listBooks(Page<Book> page) {
         page.setSize(20);
-        page = bookService.listBook(page);
-        model.addAttribute("page", page);
+        bookService.listBooks(page,null,null,BookType.ALL.Index());
         return "list";
     }
 

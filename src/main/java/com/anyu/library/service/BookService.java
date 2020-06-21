@@ -1,7 +1,6 @@
 package com.anyu.library.service;
 
 import com.anyu.library.entity.Book;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -9,7 +8,8 @@ import java.util.List;
 
 public interface BookService extends IService<Book> {
 
-    List<Book> listBooks(String name, String author, int type);
+    @Deprecated
+    List<Book> listBooks(String name, String author);
 
     Boolean saveBook(Book book);
 
@@ -19,6 +19,6 @@ public interface BookService extends IService<Book> {
 
     Boolean updateBook(Book book);
 
-    Page<Book> listBook(Page<Book> page);
+    Page<Book> listBooks(Page<Book> page, String name, String author, int type);
 
 }

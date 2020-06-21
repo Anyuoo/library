@@ -19,23 +19,22 @@
 
                 <li><a class="button border-main icon-plus-square-o" th:href="@{/book/add}"> 增加</a></li>
                 <li>搜索：</li>
-                <if condition="$iscid eq 1">
-                    <li>
-                        <select class="input" name="cid" onchange="changesearch()"
-                                style="width:100px; line-height:17px;">
-                            <option selected disabled value="">图书类型</option>
-                            <option value="">文学类</option>
-                            <option value="">历史类</option>
-                            <option value="">悬疑类</option>
-                            <option value="">心理健康类</option>
-                        </select>
-                    </li>
-                </if>
+                <li>
+                    <select class="input" name="cid" onchange="changesearch()"
+                            style="width:100px; line-height:17px;">
+                        <option selected disabled value="">图书类型</option>
+                        <option value="2">文学类</option>
+                        <option value="3">历史类</option>
+                        <option value="4">悬疑类</option>
+                        <option value="5">心理健康类</option>
+                    </select>
+                </li>
                 <li>
                     <input class="input" name="keywords" placeholder="请输入搜索关键字" style="width:250px; line-height:17px;display:inline-block"
                            type="text"/>
                     <a class="button border-main icon-search" href="javascript:void(0)" onclick="changesearch()"> 搜索</a>
                 </li>
+                <!--
                 <li>
                     推荐
                     <select class="input" name="s_isvouch" onchange="changesearch()"
@@ -53,6 +52,7 @@
                         <option value="0">否</option>
                     </select>
                 </li>
+                -->
             </ul>
         </div>
     </div>
@@ -71,7 +71,7 @@
         <th>出版社</th>
         <th width="310">操作</th>
     </tr>
-    <tr th:each="book : ${page.records}">
+    <tr th:if="${page.records != null}" th:each="book : ${page.records}">
         <td style="text-align:left; padding-left:10px;">
 <!--            <input name="id[]" type="checkbox" value=""/>-->
             <i th:text="${book.id}"></i>
@@ -137,4 +137,3 @@
 <script th:src="@{/js/list.js}"></script>
 </body>
 </html>
-<h3 style="color: cornflowerblue; text-align: center;"> 欢迎登录图书管理系统</h3>

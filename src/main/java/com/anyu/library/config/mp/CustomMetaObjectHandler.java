@@ -19,6 +19,7 @@ public class CustomMetaObjectHandler implements MetaObjectHandler {
     public void insertFill(MetaObject metaObject) {
         this.strictInsertFill(metaObject,"registerTime", LocalDateTime.class,LocalDateTime.now());
         this.strictInsertFill(metaObject,"entryTime", LocalDateTime.class,LocalDateTime.now());
+        this.strictInsertFill(metaObject, "shouldRTime", LocalDateTime.class, LocalDateTime.now().plusMonths(2));
     }
     @Override
     public void updateFill(MetaObject metaObject) {

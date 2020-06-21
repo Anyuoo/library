@@ -28,7 +28,7 @@ public class CustomIdGenerator implements IdentifierGenerator {
     public String nextUUID(Object entity) {
         String[] names = entity.getClass().getName().split("\\.");
         String name = names[names.length - 1];
-        String id =String.valueOf(UUID.randomUUID().getMostSignificantBits()).replace("-","").substring(0,8);
+        String id =String.valueOf(UUID.randomUUID().getMostSignificantBits()).replace("-","").substring(0,7);
         return name+"-"+id;
     }
 }

@@ -12,8 +12,9 @@ import java.time.LocalDateTime;
 public class Borrow {
     @TableId(type = IdType.AUTO)
     private Integer id;
-    private Long borrowId;
-    private Long bookId;
+
+    private String bookId;
+    private String readerId;
 
     @TableField(fill = FieldFill.INSERT)
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
@@ -26,5 +27,8 @@ public class Borrow {
     private LocalDateTime shouldRTime;
 
     private int status;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private LocalDateTime returnTime;
 }

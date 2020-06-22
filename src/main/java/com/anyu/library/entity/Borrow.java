@@ -32,5 +32,6 @@ public class Borrow {
 
     private int returnStatus;
 
+    @TableLogic
     private int status;
 }

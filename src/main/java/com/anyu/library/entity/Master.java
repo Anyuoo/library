@@ -23,5 +23,6 @@ public class Master {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private LocalDateTime entryTime;
 
+    @TableLogic
     private int status;
 }

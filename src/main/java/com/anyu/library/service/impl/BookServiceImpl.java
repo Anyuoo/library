@@ -24,7 +24,6 @@ public class BookServiceImpl extends ServiceImpl<BooksMapper, Book> implements B
     }
 
     @Override
-    @Transactional
     public Boolean saveBook(Book book) {
         //书籍存在,添加失败
         if(this.getBook(null,book.getName(),book.getAuthor()) != null){
@@ -39,7 +38,6 @@ public class BookServiceImpl extends ServiceImpl<BooksMapper, Book> implements B
     }
 
     @Override
-    @Transactional
     public Boolean removeBook(String id) {
         return this.removeById(id);
     }

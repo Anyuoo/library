@@ -33,6 +33,11 @@ public class BorrowServiceImpl extends ServiceImpl<BorrowMapper, Borrow> impleme
     }
 
     @Override
+    public Boolean removeBorrow(Integer id) {
+        return this.removeById(id);
+    }
+
+    @Override
     public Page<Borrow> listBorrows(Page<Borrow> page) {
         return this.page(page,wrapper(0,null,false));
     }

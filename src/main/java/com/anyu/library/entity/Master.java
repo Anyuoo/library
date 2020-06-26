@@ -1,6 +1,5 @@
 package com.anyu.library.entity;
 
-import com.alibaba.druid.sql.visitor.functions.Char;
 import com.baomidou.mybatisplus.annotation.*;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;

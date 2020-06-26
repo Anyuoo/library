@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 public class Book {
     @TableId(type = IdType.ASSIGN_UUID)
     private String id;
+
     private String name;
     private int type;
     private String author;

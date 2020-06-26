@@ -10,4 +10,6 @@ public interface BorrowService extends IService<Borrow> {
     Boolean saveBorrow(Borrow borrow);
 
     Page<Borrow> listBorrows(Page<Borrow> page);
+
+    Boolean removeBorrow(Integer id);
 }

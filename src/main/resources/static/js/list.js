@@ -16,3 +16,21 @@ function deleteBook(id,name) {
         );
     }
 }
+function deleteBorrow(id) {
+    if (confirm("确定删除?")) {
+        $.post(
+            "/library/borrow/delete",
+            {"id": id},
+            function (data) {
+                data = $.parseJSON(data);
+                console.log(data)
+                if (data.msg === 1) {
+                    console.log("delete success")
+                    window.location.reload()
+                }else {
+                    console.log("delete fail")
+                }
+            }
+        );
+    }
+}

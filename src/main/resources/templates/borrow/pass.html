@@ -40,23 +40,23 @@
         <th>操作</th>
     </tr>
 
-    <tr th:if="${page.records != null}" th:each="overdoVO : ${page.records}">
-        <td th:text="${overdoVO.book.id}"></td>
+    <tr th:if="${page.records != null}" th:each="overdueVO : ${page.records}">
+        <td th:text="${overdueVO.book.id}"></td>
 
-        <td th:text="${overdoVO.book.name}"></td>
-        <td th:text="${overdoVO.reader.id}"></td>
-        <td th:text="${overdoVO.reader.name}"></td>
-        <td th:text="${overdoVO.borrow.borrowTime}"></td>
-        <td th:text="${overdoVO.borrow.shouldRTime}"></td>
+        <td th:text="${overdueVO.book.name}"></td>
+        <td th:text="${overdueVO.reader.id}"></td>
+        <td th:text="${overdueVO.reader.name}"></td>
+        <td th:text="${overdueVO.borrow.borrowTime}"></td>
+        <td th:text="${overdueVO.borrow.shouldRTime}"></td>
 
-        <td th:text="${overdoVO.borrow.returnStatus == 1 ? '已还' : '未还'}"> </td>
+        <td th:text="${overdueVO.borrow.returnStatus == 1 ? '已还' : '未还'}"> </td>
 
-        <td  th:text="${#strings.isEmpty(overdoVO.borrow.returnTime) ? '' : overdoVO.borrow.returnTime}"></td>
+        <td  th:text="${#strings.isEmpty(overdueVO.borrow.returnTime) ? '' : overdueVO.borrow.returnTime}"></td>
 
-        <td th:text="${overdoVO.borrow.status == 0 ? '正常' : '失效'}"></td>
+        <td th:text="${overdueVO.borrow.status == 0 ? '正常' : '失效'}"></td>
         <td>
             <a class="button border-red" href="javascript:void(0)"
-               th:onclick="deleteB(this.getAttribute('id'))">
+               th:onclick="deleteB(this.getAttribute())">
                 <span class="icon-trash-o"></span> 删除</a>
         </td>
     </tr>

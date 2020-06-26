@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -49,6 +49,7 @@ public class MasterServiceImpl extends ServiceImpl<MasterMapper, Master> impleme
             map.put("msg", "用户不存在！");
             return map;
         }
+
         LoginTicket loginTicket = new LoginTicket();
         String ticket = UUID.randomUUID().toString();
         loginTicket.setTicket(ticket);
